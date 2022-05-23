@@ -166,8 +166,7 @@ public class EchoServerThread implements Runnable {
                 out.writeBytes(newImie + "\n\r");
                 out.flush();
                 System.out.println(newImie);
-                String readNewImie = brinp.readLine();
-                tmpI = readNewImie;
+                tmpI = brinp.readLine();
                 users.get(i).Name = tmpI;
 
                 String tmpN = users.get(i).Surname;
@@ -175,17 +174,16 @@ public class EchoServerThread implements Runnable {
                 out.writeBytes(newNazwisko + "\n\r");
                 out.flush();
                 System.out.println(newNazwisko);
-                String readNewNazwisko = brinp.readLine();
-                tmpN = readNewNazwisko;
+                tmpN = brinp.readLine();
                 users.get(i).Surname = tmpN;
 
-                Long tmpP = users.get(i).PESEL;
+                long tmpP = users.get(i).PESEL;
                 String newPesel = "Pesel:";
                 out.writeBytes(newPesel + "\n\r");
                 out.flush();
                 System.out.println(newPesel);
                 String readNewPesel = brinp.readLine();
-                tmpP = Long.valueOf(readNewPesel);
+                tmpP = Long.parseLong(readNewPesel);
                 users.get(i).PESEL = tmpP;
                 break;
               }
@@ -214,12 +212,13 @@ public class EchoServerThread implements Runnable {
           String tast = "Co chcesz zrobic: 1. Sprawdzic stan konta 2. Wyplacic srodki 3. Wplacic srodki  4. zrobic przelew ";
           out.writeBytes(tast + "\n\r");
           out.flush();
-          tast = brinp.readLine();
+          System.out.println(tast);
+          String read_tast = brinp.readLine();
 
           System.out.println(accnum);
           int AccNumb = Integer.parseInt(accnum);
 
-          if ("1".equals(tast)) {
+          if ("1".equals(read_tast)) {
 
             for (int i = 0; i < users.size(); i++) {
 
@@ -232,7 +231,7 @@ public class EchoServerThread implements Runnable {
 
               }
             }
-          } else if ("2".equals(tast)) {
+          } else if ("2".equals(read_tast)) {
 
             String moneyT = "Ile pieniedzy wyplacic?";
             out.writeBytes(moneyT + '\n');
@@ -252,7 +251,7 @@ public class EchoServerThread implements Runnable {
               }
             }
 
-          } else if ("3".equals(tast)) {
+          } else if ("3".equals(read_tast)) {
 
             String moneyF = "Ile pieniedzy wplacic?";
             out.writeBytes(moneyF + '\n');
@@ -272,7 +271,7 @@ public class EchoServerThread implements Runnable {
             }
 
 
-          } else if ("4".equals(tast)) {
+          } else if ("4".equals(read_tast)) {
 
             String przelew = "Ile pieniedzy przelac?";
             out.writeBytes(przelew + "\n\r");
@@ -317,8 +316,8 @@ public class EchoServerThread implements Runnable {
 
 
           try {
-            System.out.println("Odczytano linię: " + tast);
-            if (tast == null || "quit".equals(tast)) {
+            System.out.println("Odczytano linię: " + read_tast);
+            if (read_tast == null || "quit".equals(read_tast)) {
               socket.close();
               System.out.println("Zakończenie pracy z klientem...");
               break;
