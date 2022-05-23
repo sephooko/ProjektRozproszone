@@ -277,7 +277,7 @@ public class EchoServerThread implements Runnable {
             out.writeBytes(przelew + "\n\r");
             out.flush();
             przelew = brinp.readLine();
-            String komu = "Ile pieniedzy przelac (nr.konta) ?";
+            String komu = "Nr konta na ktore chcesz przelac pieniadze: ";
             out.writeBytes(komu + "\n\r");
             out.flush();
             komu = brinp.readLine();
@@ -286,7 +286,11 @@ public class EchoServerThread implements Runnable {
             double transfer = Double.parseDouble(przelew);
 
             for (int i = 0; i < users.size(); i++) {
-
+//              if (users.get(i).AccNum == To){
+//                if (To == AccNumb){
+//                  System.out.println("Probujesz przelac pieniadze samemu sobie")}
+//                else if (users.get(i).AccNum != To){ System.out.println("Nie ma takiego konta") }
+//              else{}
               if (users.get(i).AccNum == AccNumb) {
                 double tmp = users.get(i).Balance;
                 tmp = tmp - transfer;
