@@ -51,28 +51,11 @@ public class EchoServerThread implements Runnable {
 
     // ///////////////////////////
     Scanner scanner = null;
-    try {
-      scanner = new Scanner(new File("users.txt"));
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+
 
     int l = 1;
 
-    ArrayList<users> users = new ArrayList<>();
 
-    while (scanner.hasNext()) {
-
-      users user = new users();
-
-      user.Name = scanner.next();
-      user.Surname = scanner.next();
-      user.PESEL = scanner.nextLong();
-      user.AccNum = scanner.nextInt();
-      user.Balance = Double.parseDouble((scanner.next()));
-
-      users.add(user);
-    }
 
     String login = "Podaj swoj login";
     try {
@@ -95,8 +78,46 @@ public class EchoServerThread implements Runnable {
     //pętla główna
     while (true) {
       try {
+          
+        try {
+           scanner = new Scanner(new File("users.txt"));
+        } catch (FileNotFoundException e) {
+           e.printStackTrace();
+        }
+        
+/*            ArrayList<users> users = new ArrayList<>();
 
+            while (scanner.hasNext()) {
+
+              users user = new users();
+
+              user.Name = scanner.next();
+              user.Surname = scanner.next();
+              user.PESEL = scanner.nextLong();
+              user.AccNum = scanner.nextInt();
+              user.Balance = Double.parseDouble((scanner.next()));
+
+              users.add(user);
+            } */
+            
         if ("Admin".equals(login)) {
+            
+            ArrayList<users> users = new ArrayList<>();
+
+            while (scanner.hasNext()) {
+
+              users user = new users();
+
+              user.Name = scanner.next();
+              user.Surname = scanner.next();
+              user.PESEL = scanner.nextLong();
+              user.AccNum = scanner.nextInt();
+              user.Balance = Double.parseDouble((scanner.next()));
+
+              users.add(user);
+            }  
+            
+            
           String wtd = "Witaj w panelu administacyjnym. Co chcesz zrobic? | Wybierz 1 aby dodac nowe konto | Wybierz 2 aby edytowac istniejace konto";
           out.writeBytes(wtd + "\n\r");
           out.flush();
@@ -203,6 +224,21 @@ public class EchoServerThread implements Runnable {
           save.close();
 
         } else {
+            
+            ArrayList<users> users = new ArrayList<>();
+
+            while (scanner.hasNext()) {
+
+              users user = new users();
+
+              user.Name = scanner.next();
+              user.Surname = scanner.next();
+              user.PESEL = scanner.nextLong();
+            user.AccNum = scanner.nextInt();
+            user.Balance = Double.parseDouble((scanner.next()));
+
+            users.add(user);
+          }
 
           String accnum = "Podaj nr.konta";
           out.writeBytes(accnum + "\n\r");
@@ -222,15 +258,27 @@ public class EchoServerThread implements Runnable {
 
             for (int i = 0; i < users.size(); i++) {
 
-              if (users.get(i).AccNum == AccNumb) {
+              if (users.get(i).AccNum == AccNumb & users.get(i).Name.equals(login)) {
                 System.out.println("Stan konta " + users.get(i).Balance);
                 String money = "Stan konta " + users.get(i).Balance;
                 out.writeBytes(money + "\n");
                 out.flush();
                 break;
-
-              }
+                 }
             }
+            
+                      FileOutputStream stream = new FileOutputStream("users.txt", false);
+          PrintWriter save = new PrintWriter(stream);
+
+          for (int i = 0; i < users.size(); i++) {
+            save.print(users.get(i).Name + " ");
+            save.print(users.get(i).Surname + " ");
+            save.print(users.get(i).PESEL + " ");
+            save.print(users.get(i).AccNum + " ");
+            save.println(users.get(i).Balance + " ");
+          }
+          save.close();
+          
           } else if ("2".equals(read_tast)) {
 
             String moneyT = "Ile pieniedzy wyplacic?";
@@ -242,14 +290,28 @@ public class EchoServerThread implements Runnable {
 
             for (int i = 0; i < users.size(); i++) {
 
-              if (users.get(i).AccNum == AccNumb) {
+              if (users.get(i).AccNum == AccNumb & users.get(i).Name.equals(login) & users.get(i).Balance >= toWithdraw) {
                 double tmp = users.get(i).Balance;
                 tmp = tmp - toWithdraw;
                 users.get(i).Balance = tmp;
                 break;
 
+                                
               }
             }
+            
+          FileOutputStream stream = new FileOutputStream("users.txt", false);
+          PrintWriter save = new PrintWriter(stream);
+
+          for (int i = 0; i < users.size(); i++) {
+            save.print(users.get(i).Name + " ");
+            save.print(users.get(i).Surname + " ");
+            save.print(users.get(i).PESEL + " ");
+            save.print(users.get(i).AccNum + " ");
+            save.println(users.get(i).Balance + " ");
+          }
+          save.close();
+            
 
           } else if ("3".equals(read_tast)) {
 
@@ -262,13 +324,26 @@ public class EchoServerThread implements Runnable {
 
             for (int i = 0; i < users.size(); i++) {
 
-              if (users.get(i).AccNum == AccNumb) {
+              if (users.get(i).AccNum == AccNumb & users.get(i).Name.equals(login) ) {
                 double tmp = users.get(i).Balance;
                 tmp = tmp + toDeposit;
                 users.get(i).Balance = tmp;
                 break;
-              }
+              } 
             }
+            
+            
+          FileOutputStream stream = new FileOutputStream("users.txt", false);
+          PrintWriter save = new PrintWriter(stream);
+
+          for (int i = 0; i < users.size(); i++) {
+            save.print(users.get(i).Name + " ");
+            save.print(users.get(i).Surname + " ");
+            save.print(users.get(i).PESEL + " ");
+            save.print(users.get(i).AccNum + " ");
+            save.println(users.get(i).Balance + " ");
+          }
+          save.close();
 
 
           } else if ("4".equals(read_tast)) {
@@ -291,7 +366,7 @@ public class EchoServerThread implements Runnable {
 //                  System.out.println("Probujesz przelac pieniadze samemu sobie")}
 //                else if (users.get(i).AccNum != To){ System.out.println("Nie ma takiego konta") }
 //              else{}
-              if (users.get(i).AccNum == AccNumb) {
+              if (users.get(i).AccNum == AccNumb & users.get(i).Name.equals(login) & users.get(i).Balance >= transfer) {
                 double tmp = users.get(i).Balance;
                 tmp = tmp - transfer;
                 users.get(i).Balance = tmp;
@@ -299,14 +374,14 @@ public class EchoServerThread implements Runnable {
                 double tmp = users.get(i).Balance;
                 tmp = tmp + transfer;
                 users.get(i).Balance = tmp;
-              }
+              } 
+             
 
 
             }
-
-          }
-
-          FileOutputStream stream = new FileOutputStream("users.txt", false);
+            
+            
+                      FileOutputStream stream = new FileOutputStream("users.txt", false);
           PrintWriter save = new PrintWriter(stream);
 
           for (int i = 0; i < users.size(); i++) {
@@ -318,10 +393,26 @@ public class EchoServerThread implements Runnable {
           }
           save.close();
 
+          } 
+
+/*          FileOutputStream stream = new FileOutputStream("users.txt", false);
+          PrintWriter save = new PrintWriter(stream);
+
+          for (int i = 0; i < users.size(); i++) {
+            save.print(users.get(i).Name + " ");
+            save.print(users.get(i).Surname + " ");
+            save.print(users.get(i).PESEL + " ");
+            save.print(users.get(i).AccNum + " ");
+            save.println(users.get(i).Balance + " ");
+          }
+          save.close(); */
+
 
           try {
             System.out.println("Odczytano linię: " + read_tast);
             if (read_tast == null || "quit".equals(read_tast)) {
+              scanner.close();
+//              save.close();
               socket.close();
               System.out.println("Zakończenie pracy z klientem...");
               break;

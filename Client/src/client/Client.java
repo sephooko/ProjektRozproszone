@@ -13,7 +13,7 @@ public class Client {
         String host = "localhost";
         int port = 0;
         try {
-            port = new Integer("6666").intValue();
+            port = new Integer("6667").intValue();
         } catch (NumberFormatException e) {
             System.out.println("Nieprawidłowy argument: port");
             System.exit(-1);
@@ -74,7 +74,7 @@ public class Client {
                  String kek = brSockInp.readLine();
                  System.out.println(kek);
 //                brSockInp.readLine();
-//                System.out.println("Otrzymano: " + line);
+                System.out.println("Otrzymano: " + kek);
             } catch (IOException e) {
                 System.out.println("Błąd wejścia-wyjścia: " + e);
                 System.exit(-1);
