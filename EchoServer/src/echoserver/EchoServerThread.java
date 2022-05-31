@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package echoserver;
 
 import java.net.*;
@@ -117,7 +112,7 @@ public class EchoServerThread implements Runnable {
               users.add(user);
             }  
             
-            
+//            Terminal Bankiera z możliwością edycji danych klientów
           String wtd = "Witaj w panelu administacyjnym. Co chcesz zrobic? | Wybierz 1 aby dodac nowe konto | Wybierz 2 aby edytowac istniejace konto";
           out.writeBytes(wtd + "\n\r");
           out.flush();

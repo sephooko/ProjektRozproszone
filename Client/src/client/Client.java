@@ -1,9 +1,4 @@
 package client;
-
-/**
- *
- * @author dzelazny
- */
 import java.net.*;
 import java.io.*;
 
